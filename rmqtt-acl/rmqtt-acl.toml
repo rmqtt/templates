@@ -18,9 +18,9 @@ rules = [
     ["allow", { user = "test3", password = "123456" }, "connect"],         # 允许用户名为:test3，密码为:123456 的客户端连接请求
 	
     ["allow", { user = "test" }, "subscribe", ["test/#"]],                 # 允许用户名为test的客户端订阅"test/#"主题
-    ["allow", { user = "test1" }, "publish", ["test/1"]],                  # 允许用户名为test1的客户端订阅"test/1"主题
-    ["allow", { user = "test2" }, "publish", ["test/2"]],                  # 允许用户名为test2的客户端订阅"test/2"主题
-    ["allow", { user = "test3" }, "publish", ["test/3"]],                  # 允许用户名为test3的客户端订阅"test/3"主题
+    ["allow", { user = "test1" }, "publish", ["test/1"]],                  # 允许用户名为test1的客户端发布"test/1"主题的消息
+    ["allow", { user = "test2" }, "publish", ["test/2"]],                  # 允许用户名为test2的客户端发布"test/2"主题的消息
+    ["allow", { user = "test3" }, "publish", ["test/3"]],                  # 允许用户名为test3的客户端发布"test/3"主题的消息
 	
     ["deny", "all"] #拒绝其它所有操作，包括连接、发布、订阅
 ]
