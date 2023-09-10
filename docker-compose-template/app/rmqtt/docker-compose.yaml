@@ -1,0 +1,78 @@
+version: '3'
+
+services:
+  rmqtt1:
+    container_name: rmqtt1
+    image: rmqtt/rmqtt:latest
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /app/rmqtt/etc/:/app/rmqtt/etc
+      - /app/rmqtt/log/1:/var/log/rmqtt
+    ports:
+      - "1884:1883"
+      - "8884:8883"
+      - "11884:11883"
+      - "6064:6060"
+    restart: always
+    command: -f ./etc/rmqtt.toml --id 1
+    networks:
+      rmqtt-bridge:
+        aliases:
+        - node1.rmqtt.io
+
+
+  rmqtt2:
+    container_name: rmqtt2
+    image: rmqtt/rmqtt:latest
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /app/rmqtt/etc/:/app/rmqtt/etc
+      - /app/rmqtt/log/2:/var/log/rmqtt
+    ports:
+      - "1885:1883"
+      - "8885:8883"
+      - "11885:11883"
+      - "6065:6060"
+    restart: always
+    command: -f ./etc/rmqtt.toml --id 2
+    depends_on:
+      - rmqtt1
+    networks:
+      rmqtt-bridge:
+        aliases:
+        - node2.rmqtt.io
+
+  rmqtt3:
+    container_name: rmqtt3
+    image: rmqtt/rmqtt:latest
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /app/rmqtt/etc/:/app/rmqtt/etc
+      - /app/rmqtt/log/3:/var/log/rmqtt
+    ports:
+      - "1886:1883"
+      - "8886:8883"
+      - "11886:11883"
+      - "6066:6060"
+    restart: always
+    command: -f ./etc/rmqtt.toml --id 3
+    depends_on:
+      - rmqtt2
+    networks:
+      rmqtt-bridge:
+        aliases:
+        - node3.rmqtt.io
+
+
+networks:
+  rmqtt-bridge:
+    driver: bridge
+
+
+
+
+
+
