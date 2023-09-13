@@ -5,8 +5,9 @@ services:
     container_name: rmqtt1
     image: rmqtt/rmqtt:latest
     environment:
-      - TZ=Asia/Shanghai
+      #- TZ=Asia/Shanghai
     volumes:
+      - /etc/localtime:/etc/localtime
       - /app/rmqtt/etc/:/app/rmqtt/etc
       - /app/rmqtt/log/1:/var/log/rmqtt
     ports:
@@ -26,8 +27,9 @@ services:
     container_name: rmqtt2
     image: rmqtt/rmqtt:latest
     environment:
-      - TZ=Asia/Shanghai
+      #- TZ=Asia/Shanghai
     volumes:
+      - /etc/localtime:/etc/localtime
       - /app/rmqtt/etc/:/app/rmqtt/etc
       - /app/rmqtt/log/2:/var/log/rmqtt
     ports:
@@ -48,8 +50,9 @@ services:
     container_name: rmqtt3
     image: rmqtt/rmqtt:latest
     environment:
-      - TZ=Asia/Shanghai
+      #- TZ=Asia/Shanghai
     volumes:
+      - /etc/localtime:/etc/localtime
       - /app/rmqtt/etc/:/app/rmqtt/etc
       - /app/rmqtt/log/3:/var/log/rmqtt
     ports:
