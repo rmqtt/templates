@@ -4,7 +4,7 @@ services:
   rmqtt1:
     container_name: rmqtt1
     image: rmqtt/rmqtt:latest
-    environment:
+    #environment:
       #- TZ=Asia/Shanghai
     volumes:
       - /etc/localtime:/etc/localtime
@@ -17,6 +17,12 @@ services:
       - "6064:6060"
     restart: always
     command: -f ./etc/rmqtt.toml --id 1
+    privileged:
+      true
+    ulimits:
+      nofile:
+        soft: 335000
+        hard: 335000
     networks:
       rmqtt-bridge:
         aliases:
@@ -26,7 +32,7 @@ services:
   rmqtt2:
     container_name: rmqtt2
     image: rmqtt/rmqtt:latest
-    environment:
+    #environment:
       #- TZ=Asia/Shanghai
     volumes:
       - /etc/localtime:/etc/localtime
@@ -39,6 +45,12 @@ services:
       - "6065:6060"
     restart: always
     command: -f ./etc/rmqtt.toml --id 2
+    privileged:
+      true
+    ulimits:
+      nofile:
+        soft: 335000
+        hard: 335000
     depends_on:
       - rmqtt1
     networks:
@@ -49,7 +61,7 @@ services:
   rmqtt3:
     container_name: rmqtt3
     image: rmqtt/rmqtt:latest
-    environment:
+    #environment:
       #- TZ=Asia/Shanghai
     volumes:
       - /etc/localtime:/etc/localtime
@@ -62,6 +74,12 @@ services:
       - "6066:6060"
     restart: always
     command: -f ./etc/rmqtt.toml --id 3
+    privileged:
+      true
+    ulimits:
+      nofile:
+        soft: 335000
+        hard: 335000
     depends_on:
       - rmqtt2
     networks:

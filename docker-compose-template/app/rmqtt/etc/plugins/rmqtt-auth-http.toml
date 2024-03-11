@@ -47,7 +47,6 @@ http_auth_req.params = { clientid = "%c", username = "%u", password = "%P" }
 ##  - %c: clientid
 ##  - %a: ipaddress
 ##  - %r: protocol
-##  - %m: mountpoint - Not for the time being
 ##  - %t: topic
 ##
 ## Value: URL

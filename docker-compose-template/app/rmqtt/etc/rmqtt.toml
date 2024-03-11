@@ -25,7 +25,7 @@ rpc.client_timeout = "5s"
 ## Log
 ##--------------------------------------------------------------------
 # Value: off | file | console | both
-log.to = "both"
+log.to = "file"
 # Value: trace, debug, info, warn, error
 log.level = "info"
 log.dir = "/var/log/rmqtt"
@@ -39,10 +39,15 @@ log.file = "rmqtt.log"
 plugins.dir = "/app/rmqtt/etc/plugins"
 #Plug in started by default, when the mqtt server is started
 plugins.default_startups = [
-    "rmqtt-cluster-raft",
+    #"rmqtt-plugin-template",
+    #"rmqtt-retainer",
     #"rmqtt-auth-http",
+    #"rmqtt-cluster-broadcast",
+    "rmqtt-cluster-raft",
+    #"rmqtt-sys-topic",
+    #"rmqtt-message-storage",
+    #"rmqtt-session-storage",
     #"rmqtt-web-hook",
-	#"rmqtt-retainer",
     "rmqtt-http-api"
 ]
 
@@ -97,8 +102,8 @@ listener.tcp.external.max_qos_allowed = 2
 #The maximum level at which clients are allowed to subscribe to topics.
 #0 means unlimited. default value: 0
 listener.tcp.external.max_topic_levels = 0
-#Whether support retain message, true/false, default value: true
-listener.tcp.external.retain_available = true
+#Whether support retain message, true/false, default value: false
+listener.tcp.external.retain_available = false
 #Session timeout, default value: 2 hours
 listener.tcp.external.session_expiry_interval = "2h"
 #QoS 1/2 message retry interval, 0 means no resend
@@ -134,7 +139,7 @@ listener.tcp.internal.mqueue_rate_limit = "1000,1s"
 listener.tcp.internal.max_clientid_len = 65535
 listener.tcp.internal.max_qos_allowed = 2
 listener.tcp.internal.max_topic_levels = 0
-listener.tcp.internal.retain_available = true
+listener.tcp.internal.retain_available = false
 listener.tcp.internal.session_expiry_interval = "2h"
 listener.tcp.internal.message_retry_interval = "30s"
 listener.tcp.internal.message_expiry_interval = "5m"
