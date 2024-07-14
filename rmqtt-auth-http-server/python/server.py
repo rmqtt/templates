@@ -46,9 +46,11 @@ class AuthService(BaseService):
         clientid = params["clientid"] if "clientid" in params else ""
         username = params["username"] if "username" in params else ""
         password = params["password"] if "password" in params else ""
+        protocol = params["protocol"] if "protocol" in params else ""
         print("AuthService clientid:", clientid)
         print("AuthService username:", username)
         print("AuthService password:", password)
+        print("AuthService protocol:", protocol)
         #
         # @TODO Verify user validity, 
         #
@@ -72,14 +74,16 @@ class AuthService(BaseService):
 class ACLService(BaseService):
 
     def verify(self, params):
-        #access = "%A", username = "%u", clientid = "%c", ipaddr = "%a", topic = "%t"
+        #access = "%A", username = "%u", protocol = "%r", clientid = "%c", ipaddr = "%a", topic = "%t"
         access = params["access"] if "access" in params else ""
         clientid = params["clientid"] if "clientid" in params else ""
         username = params["username"] if "username" in params else ""
+        protocol = params["protocol"] if "protocol" in params else ""
         ipaddr = params["ipaddr"] if "ipaddr" in params else ""
         topic = params["topic"] if "topic" in params else ""
         print("ACLService clientid:", clientid)
         print("ACLService username:", username)
+        print("ACLService protocol:", protocol)
         print("ACLService access:", access)
         print("ACLService ipaddr:", ipaddr)
         print("ACLService topic:", topic)

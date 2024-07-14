@@ -22,9 +22,11 @@ func auth(c *gin.Context) {
 		clientid := params.Get("clientid")
 		username := params.Get("username")
 		password := params.Get("password")
+                protocol := params.Get("protocol")
 		fmt.Println("auth clientid:", clientid)
 		fmt.Println("auth username:", username)
 		fmt.Println("auth password:", password)
+                fmt.Println("auth protocol:", protocol)
 
 		// @TODO Verify user validity,
 
@@ -55,15 +57,17 @@ func acl(c *gin.Context) {
 	if err != nil {
 		c.String(http.StatusBadRequest, err.Error())
 	} else {
-		//access = "%A", username = "%u", clientid = "%c", ipaddr = "%a", topic = "%t"
+		//access = "%A", username = "%u", protocol = "%r", clientid = "%c", ipaddr = "%a", topic = "%t"
 		access := params.Get("access")
 		clientid := params.Get("clientid")
 		username := params.Get("username")
+                protocol := params.Get("protocol")
 		ipaddr := params.Get("ipaddr")
 		topic := params.Get("topic")
 
 		fmt.Println("acl clientid:", clientid)
 		fmt.Println("acl username:", username)
+                fmt.Println("acl protocol:", protocol)
 		fmt.Println("acl access:", access)
 		fmt.Println("acl ipaddr:", ipaddr)
 		fmt.Println("acl topic:", topic)

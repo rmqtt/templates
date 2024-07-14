@@ -23,9 +23,14 @@ async fn auth(req: &mut Request, res: &mut Response) {
         .get("password")
         .map(|v| v.as_str())
         .unwrap_or_default();
+    let protocol = params
+        .get("protocol")
+        .map(|v| v.as_str())
+        .unwrap_or_default();
     println!("auth clientid: {}", clientid);
     println!("auth username: {}", username);
     println!("auth password: {}", password);
+    println!("auth protocol: {}", protocol);
 
     // @TODO Verify user validity,
 
@@ -69,11 +74,16 @@ async fn acl(req: &mut Request, res: &mut Response) {
         .get("username")
         .map(|v| v.as_str())
         .unwrap_or_default();
+    let protocol = params
+        .get("protocol")
+        .map(|v| v.as_str())
+        .unwrap_or_default();
     let ipaddr = params.get("ipaddr").map(|v| v.as_str()).unwrap_or_default();
     let topic = params.get("topic").map(|v| v.as_str()).unwrap_or_default();
 
     println!("acl clientid: {}", clientid);
     println!("acl username: {}", username);
+    println!("acl protocol: {}", protocol);
     println!("acl access: {}", access);
     println!("acl ipaddr: {}", ipaddr);
     println!("acl topic: {}", topic);
