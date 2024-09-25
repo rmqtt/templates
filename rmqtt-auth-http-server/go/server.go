@@ -22,11 +22,11 @@ func auth(c *gin.Context) {
 		clientid := params.Get("clientid")
 		username := params.Get("username")
 		password := params.Get("password")
-                protocol := params.Get("protocol")
+		protocol := params.Get("protocol")
 		fmt.Println("auth clientid:", clientid)
 		fmt.Println("auth username:", username)
 		fmt.Println("auth password:", password)
-                fmt.Println("auth protocol:", protocol)
+		fmt.Println("auth protocol:", protocol)
 
 		// @TODO Verify user validity,
 
@@ -43,8 +43,65 @@ func auth(c *gin.Context) {
 		}
 
 		// is admin
-		if username == "admin" {
+		if username == "user-admin" {
 			c.Header("X-Superuser", "true")
+		}
+
+		//acl
+		if username == "user-acl" {
+			json_acl := `
+			{
+				"result":"allow",
+				"superuser": false,
+				"expire_at": 1827143027,
+				"acl": [
+					{
+					"permission": "allow",
+					"action": "all",
+					"topic": "foo/${clientid}"
+					},
+					{
+					"permission": "allow",
+					"action": "subscribe",
+					"topic": "eq foo/1/#",
+					"qos": [1,2]
+					},
+					{
+					"permission": "allow",
+					"action": "subscribe",
+					"topic": "foo/2/#",
+					"qos": 1
+					},
+					{
+					"permission": "allow",
+					"action": "publish",
+					"topic": "foo/2/1",
+					"qos": 1
+					},
+					{
+					"permission": "allow",
+					"action": "publish",
+					"topic": "foo/${username}",
+					"retain": false,
+					"qos": [0,1]
+					},
+					{
+					"permission": "deny",
+					"action": "all",
+					"topic": "foo/3"
+					},
+					{
+					"permission": "deny",
+					"action": "publish",
+					"topic": "foo/4",
+					"retain": true
+					}
+				]
+			}`
+			var json_data map[string]interface{}
+			json.Unmarshal([]byte(json_acl), &json_data)
+			c.JSON(http.StatusOK, json_data)
+			return
 		}
 
 		// allow
@@ -61,13 +118,13 @@ func acl(c *gin.Context) {
 		access := params.Get("access")
 		clientid := params.Get("clientid")
 		username := params.Get("username")
-                protocol := params.Get("protocol")
+		protocol := params.Get("protocol")
 		ipaddr := params.Get("ipaddr")
 		topic := params.Get("topic")
 
 		fmt.Println("acl clientid:", clientid)
 		fmt.Println("acl username:", username)
-                fmt.Println("acl protocol:", protocol)
+		fmt.Println("acl protocol:", protocol)
 		fmt.Println("acl access:", access)
 		fmt.Println("acl ipaddr:", ipaddr)
 		fmt.Println("acl topic:", topic)

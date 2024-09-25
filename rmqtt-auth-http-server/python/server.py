@@ -64,8 +64,62 @@ class AuthService(BaseService):
             return "deny"
 
         #is admin
-        if username == "admin":
+        if username == "user-admin":
             web.header("X-Superuser", "true")
+
+        #acl
+        if username == "user-acl":
+            data = {
+                    "result":"allow",
+                    "superuser": False,
+                    "expire_at": 1827143027,
+                    "acl": [
+                        {
+                        "permission": "allow",
+                        "action": "all",
+                        "topic": "foo/${clientid}"
+                        },
+                        {
+                        "permission": "allow",
+                        "action": "subscribe",
+                        "topic": "eq foo/1/#",
+                        "qos": [1,2]
+                        },
+                        {
+                        "permission": "allow",
+                        "action": "subscribe",
+                        "topic": "foo/2/#",
+                        "qos": 1
+                        },
+                        {
+                        "permission": "allow",
+                        "action": "publish",
+                        "topic": "foo/2/1",
+                        "qos": 1
+                        },
+                        {
+                        "permission": "allow",
+                        "action": "publish",
+                        "topic": "foo/${username}",
+                        "retain": False,
+                        "qos": [0,1]
+                        },
+                        {
+                        "permission": "deny",
+                        "action": "all",
+                        "topic": "foo/3"
+                        },
+                        {
+                        "permission": "deny",
+                        "action": "publish",
+                        "topic": "foo/4",
+                        "retain": True
+                        }
+                    ]
+                }
+            web.header('Content-Type', CONTENT_TYPE_JSON)
+            return json.dumps(data)
+
 
         #other
         return "allow"
