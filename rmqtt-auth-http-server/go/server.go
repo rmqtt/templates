@@ -140,8 +140,9 @@ func acl(c *gin.Context) {
 			fmt.Println("is Publish, topic is ", topic)
 		}
 
-		if strings.HasSuffix(topic, "/cache") {
+		if strings.HasSuffix(topic, "/cache") || strings.HasPrefix(topic, "/cache") {
 			c.Header("X-Cache", "-1") //Unit millisecond, if the value is -1, it will not expire before disconnecting
+			fmt.Println("X-Cache yes")
 		}
 
 		// test ignore
